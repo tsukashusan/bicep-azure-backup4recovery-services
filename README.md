@@ -1,4 +1,4 @@
-# Bicep sample (Ubunt VM ＋ Bastion)
+# Bicep sample (Azure Backup)
 
 ## Preparation
 1. Install az cli  
