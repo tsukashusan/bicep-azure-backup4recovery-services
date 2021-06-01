@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "existingRecoveryServicesVault": {
+        "value": "sampleRecoveryContainer0"
+        },
+        "existingVirtualMachines": {
+        "value": ["ubuntu20"]
+        },
+        "policyId": {
+        "value": "/subscriptions/dc5d3c89-36dd-4a3c-b09b-e6ee41f6d5b5/resourceGroups/bicepsample0427-2/providers/Microsoft.RecoveryServices/vaults/sampleRecoveryContainer0/backupPolicies/daily"
+        }
+    }
+}
