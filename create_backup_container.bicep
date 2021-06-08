@@ -15,7 +15,7 @@ resource backup 'Microsoft.RecoveryServices/vaults@2021-01-01' = {
   }
 }
 
-resource backupconfig  'Microsoft.RecoveryServices/vaults/backupstorageconfig@2018-12-20' = {
+resource backupconfig  'Microsoft.RecoveryServices/vaults/backupstorageconfig@2021-01-01' = {
   name: 'vaultstorageconfig'
   properties: {
     storageModelType: storageModelType
