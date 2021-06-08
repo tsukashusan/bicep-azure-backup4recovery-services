@@ -47,9 +47,9 @@ https://github.com/Azure/bicep/blob/main/docs/installing.md#windows-installer
 ```
 set-variable -name TENANT_ID "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" -option constant
 set-variable -name SUBSCRIPTOIN_GUID "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" -option constant
-set-variable -name BICEP_FILE "backup.bicep" -option constant
-set-variable -name PARAMETER_FILE "azuredeploy.parameters.dev.json" -option constant
 
+$bicepFile = "backup.bicep"
+$parameterFile = "azuredeploy.parameters.dev.json"
 $resourceGroupName = "xxxxx"
 $location = "xxxxx"
 ```
@@ -62,8 +62,8 @@ $location = "xxxxx"
 setlocal
 set TENANT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 set SUBSCRIPTOIN_GUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-set BICEP_FILE=backup.bicep
-set PARAMETER_FILE=azuredeploy.parameters.dev.json
+set bicepFile=backup.bicep
+set parameterFile=azuredeploy.parameters.dev.json
 set resourceGroupName=xxxxx
 set location=xxxxx
 ```
@@ -84,8 +84,8 @@ New-AzResourceGroup -Name ${resourceGroupName} -Location ${location} -Verbose
 New-AzResourceGroupDeployment `
   -Name devenvironment `
   -ResourceGroupName ${resourceGroupName} `
-  -TemplateFile ${BICEP_FILE} `
-  -TemplateParameterFile ${PARAMETER_FILE} `
+  -TemplateFile ${bicepFile} `
+  -TemplateParameterFile ${parameterFile} `
   -Verbose
 ```
 
@@ -105,7 +105,7 @@ az group create --name ${resourceGroupName} --location ${location} --verbose
 ```
 4. Deployment Create  
 ```
-az deployment group create --resource-group ${resourceGroupName} --template-file ${BICEP_FILE} --parameters ${PARAMETER_FILE} --verbose
+az deployment group create --resource-group ${resourceGroupName} --template-file ${bicepFile} --parameters ${parameterFile} --verbose
 ```
 
 ### STEP 2 (Azure CLI + cmd.exe) ※ not recommended
@@ -123,7 +123,7 @@ az group create --name %resourceGroupName% --location %location% --verbose
 ```
 4. Deployment Create  
 ```
-az deployment group create --resource-group %resourceGroupName% --template-file %BICEP_FILE% --parameters %PARAMETER_FILE% --verbose
+az deployment group create --resource-group %resourceGroupName% --template-file %bicepFile% --parameters %parameterFile% --verbose
 ```
 
 ## Usage(Set Backup)
@@ -178,7 +178,8 @@ $policies | % { Write-Host $_.Id }
 ```
 set-variable -name TENANT_ID "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" -option constant
 set-variable -name SUBSCRIPTOIN_GUID "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" -option constant
-$bicepFile = "deploy_vm_backup.bicep" -option constant
+
+$bicepFile = "deploy_vm_backup.bicep"
 $parameterFile = "azuredeploy.backup.parameters.dev.json"
 
 $resourceGroupName = "xxxxx"
@@ -236,7 +237,7 @@ az group create --name ${resourceGroupName} --location ${location} --verbose
 ```
 4. Deployment Create  
 ```
-az deployment group create --resource-group ${resourceGroupName} --template-file ${BICEP_FILE} --parameters ${PARAMETER_FILE} --verbose
+az deployment group create --resource-group ${resourceGroupName} --template-file ${bicepFile} --parameters ${parameterFile} --verbose
 ```
 
 ### STEP 2 (Azure CLI + cmd.exe) ※ not recommended
@@ -254,7 +255,7 @@ az group create --name %resourceGroupName% --location %location% --verbose
 ```
 4. Deployment Create  
 ```
-az deployment group create --resource-group %resourceGroupName% --template-file %BICEP_FILE% --parameters %PARAMETER_FILE% --verbose
+az deployment group create --resource-group %resourceGroupName% --template-file %bicepFile% --parameters %parameterFile% --verbose
 ```
 
 
