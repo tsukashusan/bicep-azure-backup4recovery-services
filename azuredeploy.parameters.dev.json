@@ -5,14 +5,8 @@
     "policyName": {
       "value": "daily"
     },
-    "backupconfigName": {
-      "value": "samplebackupConfig"
-    },
     "recoveryContainerName": {
       "value": "sampleRecoveryContainer0"
-    },
-    "storageModelType": {
-      "value": "LocallyRedundant"
     },
     "timezone" :{
       "value": "Tokyo Standard Time"

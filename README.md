@@ -68,7 +68,7 @@ https://github.com/Azure/bicep/blob/main/docs/installing.md#windows-installer
 ```
 set-variable -name TENANT_ID "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" -option constant
 set-variable -name SUBSCRIPTOIN_GUID "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" -option constant
-set-variable -name BICEP_FILE "create_backup_container.bicep" -option constant
+set-variable -name BICEP_FILE "backup.bicep" -option constant
 set-variable -name PARAMETER_FILE "azuredeploy.parameters.dev.json" -option constant
 
 $resourceGroupName = "xxxxx"
@@ -83,7 +83,7 @@ $location = "xxxxx"
 setlocal
 set TENANT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 set SUBSCRIPTOIN_GUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-set BICEP_FILE=create_backup_container.bicep
+set BICEP_FILE=backup.bicep
 set PARAMETER_FILE=azuredeploy.parameters.dev.json
 set resourceGroupName=xxxxx
 set location=xxxxx
