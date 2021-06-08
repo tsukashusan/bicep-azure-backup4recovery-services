@@ -1,7 +1,5 @@
 param recoveryContainerName string
 param location string
-param backupconfigName string
-param storageModelType string
 param policieName string
 param timezone string
 
