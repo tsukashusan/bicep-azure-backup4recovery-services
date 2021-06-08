@@ -3,13 +3,16 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "existingRecoveryServicesVault": {
-        "value": "sampleRecoveryContainer0"
+            "value": "sampleRecoveryContainer0"
         },
         "existingVirtualMachines": {
-        "value": ["ubuntu20"]
+            "value": ["ubuntu20"]
+        },
+        "existingVirtualMachinesResourceGroup" :{
+            "value": "xxxx"
         },
         "policyId": {
-        "value": "/subscriptions/dc5d3c89-36dd-4a3c-b09b-e6ee41f6d5b5/resourceGroups/bicepsample0427-2/providers/Microsoft.RecoveryServices/vaults/sampleRecoveryContainer0/backupPolicies/daily"
+            "value": "/subscriptions/dc5d3c89-36dd-4a3c-b09b-e6ee41f6d5b5/resourceGroups/bicepsample0427-2/providers/Microsoft.RecoveryServices/vaults/sampleRecoveryContainer0/backupPolicies/daily"
         }
     }
 }

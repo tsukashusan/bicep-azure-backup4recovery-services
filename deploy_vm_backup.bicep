@@ -1,11 +1,10 @@
 //scope
 targetScope = 'resourceGroup'
 //Storage account for deployment scripts
-var location = resourceGroup().location
-var resourceGroupName = resourceGroup().name
 
 param existingRecoveryServicesVault string
 param existingVirtualMachines array
+param existingVirtualMachinesResourceGroup string
 param policyId string
 
 
@@ -14,7 +13,7 @@ module vmbackup 'backup_backupfabrics.bicep' = {
   params: {
       existingRecoveryServicesVault: existingRecoveryServicesVault
       existingVirtualMachines: existingVirtualMachines
-      existingVirtualMachinesResourceGroup: resourceGroupName
+      existingVirtualMachinesResourceGroup: existingVirtualMachinesResourceGroup
       policyId: policyId
     }
 }
