@@ -1,6 +1,8 @@
 param recoveryContainerName string
 param location string
 param policieName string
+param storageModelType string //storageModelType: 'GeoRedundant'| 'LocallyRedundant'
+param enableCRR bool
 param timezone string
 
 resource backup 'Microsoft.RecoveryServices/vaults@2021-01-01' = {
@@ -11,6 +13,18 @@ resource backup 'Microsoft.RecoveryServices/vaults@2021-01-01' = {
   }
   properties: {
   }
+}
+
+resource backupconfig  'Microsoft.RecoveryServices/vaults/backupstorageconfig@2018-12-20' = {
+  name: 'vaultstorageconfig'
+  properties: {
+    storageModelType: storageModelType
+    crossRegionRestoreFlag: enableCRR
+  }
+  parent: backup
+  dependsOn: [
+    backup
+  ]
 }
 
 resource backuppolicy 'Microsoft.RecoveryServices/vaults/backupPolicies@2021-02-01' = {

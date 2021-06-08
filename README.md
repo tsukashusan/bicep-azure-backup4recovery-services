@@ -5,12 +5,14 @@
 https://docs.microsoft.com/ja-jp/cli/azure/install-azure-cli
 1. bicep install
 https://github.com/Azure/bicep/blob/main/docs/installing.md#windows-installer
-1. Edit parameter File
-- azuredeploy.parameters.dev.json</br>
-  - require</br>
-  xxxx -> (policyName)</br>
-  xxxxx -> (backupconfigName) </br>
-  xxxxxx ->  (recoveryContainerName) </br>
+1. Edit parameter File (For Create Container)
+- azuredeploy.parameters.dev.json
+  - require
+    - xxx -> (recoveryContainerName)
+    - xxxx -> (policyName) ex.) daily Tokyo Standard Time
+    - LocallyRedundant -> Choose LocallyRedundant or GeoRedundant
+    - enableCRR ->  true or false
+    - timezone -> Your Timezone ex.)
   LocallyRedundant -> =Choose LocallyRedundant or GeoRedundant </br>
   Tokyo Standard Time -> Choose your time zone.
  
@@ -19,17 +21,17 @@ https://github.com/Azure/bicep/blob/main/docs/installing.md#windows-installer
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "recoveryContainerName": {
+      "value": "xxx"
+    },
     "policyName": {
       "value": "xxxx"
     },
-    "backupconfigName": {
-      "value": "xxxxx"
-    },
-    "recoveryContainerName": {
-      "value": "xxxxxx"
-    },
     "storageModelType": {
       "value": "LocallyRedundant"
+    },
+    "enableCRR" : {
+      "value": true
     },
     "timezone" :{
       "value": "Tokyo Standard Time"
@@ -37,29 +39,6 @@ https://github.com/Azure/bicep/blob/main/docs/installing.md#windows-installer
   }
 }
 ```
-- azuredeploy.backup.parameters.dev.json</br>
-  - require</br>
-  ${recoveryContainerName} -> Choose the recoveryContainerName described in azuredeploy.parameters.dev.json..</br>
-  xxx -> Name of the virtual machine to be backed up </br>
-  xxxx -> Describe policyId. Use the ID that you retrieved using `get_recoveryservicepolicy.ps1.` </br>
-```
-{
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "existingRecoveryServicesVault": {
-          "value": "${recoveryContainerName}"
-        },
-        "existingVirtualMachines": {
-          "value": ["xxx"]
-        },
-        "policyId": {
-          "value": "xxxx"
-        }
-    }
-}
-```
-
 ## Usage(Create Container)
 ### STEP 1 (PowerShell) ※ recommended
 1. Execute PowerShell Prompt
@@ -148,6 +127,33 @@ az deployment group create --resource-group %resourceGroupName% --template-file 
 ```
 
 ## Usage(Set Backup)
+### Preparation
+- azuredeploy.backup.parameters.dev.json
+  - require
+  - ${recoveryContainerName} -> Choose the recoveryContainerName described in azuredeploy.parameters.dev.json.
+  - xxx -> Name of the virtual machine to be backed up
+  - xxxx -> ResourceGroup Name of Virtual Machine.
+  - xxxxx -> Describe policyId. Use the ID that you retrieved using `get_recoveryservicepolicy.ps1.` </br>
+```
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "existingRecoveryServicesVault": {
+            "value": "sampleRecoveryContainer0"
+        },
+        "existingVirtualMachines": {
+            "value": ["xxx"]
+        },
+        "existingVirtualMachinesResourceGroup" :{
+            "value": "xxxx"
+        },
+        "policyId": {
+            "value": "xxxxx"
+        }
+    }
+}
+```
 ### STEP 1 (PowerShell) ※ recommended
 1. Execute PowerShell Prompt
 1. Set Parameter(x)
@@ -155,8 +161,8 @@ az deployment group create --resource-group %resourceGroupName% --template-file 
 ```
 set-variable -name TENANT_ID "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" -option constant
 set-variable -name SUBSCRIPTOIN_GUID "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" -option constant
-set-variable -name BICEP_FILE "deploy_vm_backup.bicep" -option constant
-set-variable -name PARAMETER_FILE "azuredeploy.backup.parameters.dev.json" -option constant
+$bicepFile = "deploy_vm_backup.bicep" -option constant
+$parameterFile = "azuredeploy.backup.parameters.dev.json"
 
 $resourceGroupName = "xxxxx"
 $location = "xxxxx"
@@ -170,8 +176,8 @@ $location = "xxxxx"
 setlocal
 set TENANT_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 set SUBSCRIPTOIN_GUID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-set BICEP_FILE=deploy_vm_backup.bicep
-set PARAMETER_FILE=azuredeploy.backup.parameters.dev.json
+set bicepFile=deploy_vm_backup.bicep
+set parameterFile=azuredeploy.backup.parameters.dev.json
 set resourceGroupName=xxxxx
 set location=xxxxx
 ```
@@ -192,8 +198,8 @@ New-AzResourceGroup -Name ${resourceGroupName} -Location ${location} -Verbose
 New-AzResourceGroupDeployment `
   -Name devenvironment `
   -ResourceGroupName ${resourceGroupName} `
-  -TemplateFile ${BICEP_FILE} `
-  -TemplateParameterFile ${PARAMETER_FILE} `
+  -TemplateFile ${bicepFile} `
+  -TemplateParameterFile ${parameterFile} `
   -Verbose
 ```
 
