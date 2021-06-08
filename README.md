@@ -128,6 +128,23 @@ az deployment group create --resource-group %resourceGroupName% --template-file 
 
 ## Usage(Set Backup)
 ### Preparation
+- get_recoveryservicepolicy.ps1
+  - xxx -> ResourceGroup of Vault.
+  - xxxx -> Recovery Service Container Name(Vault)
+```
+$resourceGroupName = "xxx"
+$recoveryServiceName = "xxxx"
+
+
+$vault = Get-AzRecoveryServicesVault -ResourceGroupName $resourceGroupName -Name $recoveryServiceName
+$policies = Get-AzRecoveryServicesBackupProtectionPolicy -VaultId $vault.id
+
+$policies | % { Write-Host $_.Id }
+```
+```
+> .\get_recoveryservicepolicy.ps1
+```
+
 - azuredeploy.backup.parameters.dev.json
   - require
   - ${recoveryContainerName} -> Choose the recoveryContainerName described in azuredeploy.parameters.dev.json.
